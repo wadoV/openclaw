@@ -1,0 +1,35 @@
+{
+  "gateway": {
+    "port": 8080,
+    "bind": "lan",
+    "auth": {
+      "token": "${OPENCLAW_GATEWAY_TOKEN}"
+    },
+    "channelHealthCheckMinutes": 5
+  },
+  "agents": {
+    "defaults": {
+      "workspace": "/data/workspace",
+      "model": {
+        "primary": "anthropic/claude-opus-4-8",
+        "fallbacks": [
+          "google/gemini-2.5-pro",
+          "deepseek/deepseek-v3"
+        ]
+      },
+      "sandbox": {
+        "mode": "off"
+      }
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "botToken": "${TELEGRAM_BOT_TOKEN}",
+      "dmPolicy": "allowlist",
+      "allowFrom": [
+        "tg:REEMPLAZAR_CON_TU_ID_NUMERICO"
+      ]
+    }
+  }
+}
