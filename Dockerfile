@@ -47,9 +47,9 @@ RUN --mount=type=bind,source=packages,target=/tmp/packages,readonly \
 # ── Stage 2: Build ──────────────────────────────────────────────
 FROM ${OPENCLAW_BUN_IMAGE} AS bun-binary
 FROM ${OPENCLAW_NODE_BOOKWORM_IMAGE} AS build
-ENV OPENCLAW_TSDOWN_MAX_OLD_SPACE_MB=4096
+ENV OPENCLAW_TSDOWN_MAX_OLD_SPACE_MB=2048
 ENV OPENCLAW_RUN_NODE_SKIP_DTS_BUILD=1
-ENV NODE_OPTIONS="--max-old-space-size=4096"
+ENV NODE_OPTIONS="--max-old-space-size=2048"
 ARG OPENCLAW_BUNDLED_PLUGIN_DIR
 ARG OPENCLAW_EXTENSIONS
 
@@ -122,7 +122,7 @@ RUN pnpm_config_verify_deps_before_run=false pnpm canvas:a2ui:bundle || \
 RUN if printf '%s\n' "$OPENCLAW_EXTENSIONS" | tr ',' ' ' | tr ' ' '\n' | grep -qx 'qa-lab'; then \
       export OPENCLAW_BUILD_PRIVATE_QA=1 OPENCLAW_ENABLE_PRIVATE_QA_CLI=1; \
     fi && \
-    NODE_OPTIONS=--max-old-space-size=4096 pnpm_config_verify_deps_before_run=false pnpm --workspace-concurrency=1 build:docker
+    NODE_OPTIONS=--max-old-space-size=2048 pnpm_config_verify_deps_before_run=false pnpm --workspace-concurrency=1 build:docker
 # Force pnpm for UI build (Bun may fail on ARM/Synology architectures)
 ENV OPENCLAW_PREFER_PNPM=1
 RUN pnpm_config_verify_deps_before_run=false pnpm ui:build
