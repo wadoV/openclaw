@@ -47,6 +47,8 @@ RUN --mount=type=bind,source=packages,target=/tmp/packages,readonly \
 # ── Stage 2: Build ──────────────────────────────────────────────
 FROM ${OPENCLAW_BUN_IMAGE} AS bun-binary
 FROM ${OPENCLAW_NODE_BOOKWORM_IMAGE} AS build
+ENV OPENCLAW_TSDOWN_MAX_OLD_SPACE_MB=2560
+ENV NODE_OPTIONS="--max-old-space-size=2560"
 ARG OPENCLAW_BUNDLED_PLUGIN_DIR
 ARG OPENCLAW_EXTENSIONS
 
