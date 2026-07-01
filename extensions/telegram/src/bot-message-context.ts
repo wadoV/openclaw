@@ -248,6 +248,18 @@ export const buildTelegramMessageContext = async ({
   const freshCfg =
     loadFreshConfig?.() ??
     (runtime?.getRuntimeConfig ?? (await loadTelegramMessageContextRuntime()).getRuntimeConfig)();
+  let overrideAgentId: string | undefined;
+  const msgText = msg.text?.trim() ?? msg.caption?.trim();
+  if (msgText) {
+    if (msgText.startsWith("/dev")) {
+      overrideAgentId = "dev";
+    } else if (msgText.startsWith("/3d")) {
+      overrideAgentId = "td";
+    } else if (msgText.startsWith("/biz")) {
+      overrideAgentId = "biz";
+    }
+  }
+
   const conversationRoute = resolveTelegramConversationRoute({
     cfg: freshCfg,
     accountId: account.accountId,
@@ -256,7 +268,7 @@ export const buildTelegramMessageContext = async ({
     resolvedThreadId,
     replyThreadId,
     senderId,
-    topicAgentId: topicConfig?.agentId,
+    topicAgentId: overrideAgentId ?? topicConfig?.agentId,
   });
   const { bindingMode } = conversationRoute;
   let { route } = conversationRoute;

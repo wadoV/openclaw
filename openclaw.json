@@ -12,14 +12,36 @@
     "defaults": {
       "workspace": "/data/workspace",
       "model": {
-        "primary": "anthropic/claude-opus-4-8",
+        "primary": "google/gemini-2.5-pro",
         "fallbacks": [
-          "google/gemini-2.5-pro",
           "deepseek/deepseek-v3"
         ]
       },
       "sandbox": {
         "mode": "off"
+      }
+    },
+    "dev": {
+      "name": "DEV Department",
+      "description": "Front-end architecture and code auditing",
+      "model": {
+        "primary": "google/gemini-2.5-pro",
+        "fallbacks": ["deepseek/deepseek-v3"]
+      }
+    },
+    "td": {
+      "name": "3D Department",
+      "description": "Blender animations and scrollytelling script directions",
+      "model": {
+        "primary": "google/gemini-2.5-pro"
+      }
+    },
+    "biz": {
+      "name": "BIZ Department",
+      "description": "Milestone tracking and luxury copywriting",
+      "model": {
+        "primary": "google/gemini-2.5-pro",
+        "fallbacks": ["deepseek/deepseek-v3"]
       }
     }
   },
@@ -29,8 +51,19 @@
       "botToken": "${TELEGRAM_BOT_TOKEN}",
       "dmPolicy": "allowlist",
       "allowFrom": [
-        "tg:REEMPLAZAR_CON_TU_ID_NUMERICO"
+        "tg:8682151749"
       ]
+    }
+  },
+  "hooks": {
+    "enabled": true,
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "n8n-logger": {
+          "enabled": true
+        }
+      }
     }
   }
 }
